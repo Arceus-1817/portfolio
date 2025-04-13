@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Hero Section with Sidebar */
+    .hero-container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1a2526;
+      color: white;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      background-color: #ccc;
+    }
+
+    .sidebar h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar .social-icons a {
+      color: white;
+      font-size: 1.2rem;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar .social-icons a:hover {
+      opacity: 1;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      width: 100%;
+    }
+
+    .sidebar ul li {
+      margin: 1.5rem 0;
+    }
+
+    .sidebar ul li a {
+      color: #a0a0a0;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      color: #00aaff;
+    }
+
+    .hero {
+      flex: 1;
+      background-image: url('WhatsApp\ Image\ 2025-04-13\ at\ 18.10.47_ae59cf03.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 5rem;
+      color: rgb(35, 23, 23);
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+
+    .hero p span {
+      color: #f02906;
+    }
+
+    /* General Section Styling */
+    section {
+      padding: 3rem 2rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      color: #2d3e50;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 3px;
+      background-color: #4a9c9a;
+      bottom: -5px;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    h2:hover::after {
+      width: 100%;
+    }
+
+    /* About Section */
+    #about {
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+      border-left: 5px solid #4a9c9a;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #about:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #about p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    /* Projects Section - Grid Layout */
+    #projects {
+      background-color: #f7f7f7;
+      padding: 2rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background-color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-card h3 {
+      color: #2d3e50;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    /* Skills Section - Grid Layout */
+    #skills {
+      background-color: #fff;
+      padding: 2rem;
+      border-right: 5px solid #4a9c9a;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-item {
+      background-color: #f7f7f7;
+      padding: 1rem;
+      border-radius: 5px;
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .skill-item:hover {
+      background-color: #4a9c9a;
+      color: #fff;
+    }
+
+    /* Education & Certifications - Timeline Style */
+    .education,
+    .certifications {
+      background-color: #f7f7f7;
+      padding: 2rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background-color: #4a9c9a;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -0.4rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      background-color: #4a9c9a;
+      border-radius: 50%;
+    }
+
+    .timeline-item strong {
+      color: #2d3e50;
+      font-size: 1.2rem;
+    }
+
+    .timeline-item p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    /* Contact Section */
+    #contact {
+      background-color: #fff;
+      padding: 2rem;
+      text-align: center;
+      border-top: 5px solid #4a9c9a;
+    }
+
+    #contact p {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #contact a {
+      color: #4a9c9a;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    #contact a:hover {
+      color: #2d3e50;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #2d3e50;
+      color: white;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      font-size: 1rem;
+    }
+
+    footer a {
+      color: #4a9c9a;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 1rem;
+      }
+
+      .hero {
+        padding: 2rem;
+        height: 50vh;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      section {
+        padding: 2rem 1rem;
+        margin: 1rem;
+      }
+
+      .project-grid,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer p {
+        font-size: 0.9rem;
+      }
+      .profile-pic{
+        background-image: url('sideview.png');
+                background-size: cover;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero Section with Sidebar -->
+  <div class="hero-container">
+    <div class="sidebar">
+      <div class="profile-pic"></div>
+      <h1>Shreyansh</h1>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <ul>
+        <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+        <li><a href="#resume"><i class="fas fa-file-alt"></i> Resume</a></li>
+        <li><a href="#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+        <li><a href="#dropdown"><i class="fas fa-chevron-down"></i> Dropdown</a></li>
+        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+    <div class="hero">
+      <h1>Shreyansh</h1>
+      <p>I'm <span>Developer</span></p>
+    </div>
+  </div>
+
+  <!-- Removed the <nav> section -->
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I'm a passionate web developer with experience in building dynamic and responsive websites and applications using modern technologies. I love creating user-friendly designs and solving complex problems with clean, efficient code.</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <h3>Portfolio Website</h3>
+        <p>Built with HTML, CSS, and JavaScript to showcase my work and skills.</p>
+      </div>
+      <div class="project-card">
+        <h3>Todo App</h3>
+        <p>A ReactJS-based project to manage daily tasks with a clean and intuitive interface.</p>
+      </div>
+      <div class="project-card">
+        <h3>E-Commerce Site</h3>
+        <p>Developed a full-stack e-commerce platform using Node.js, Express, and MongoDB.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-item">HTML5, CSS3, JavaScript</div>
+      <div class="skill-item">C, Cpp, Java</div>
+      <div class="skill-item">Oracle, MySQL</div>
+      <div class="skill-item">Git, GitHub, Figma</div>
+    </div>
+  </section>
+
+  <section id="education" class="education">
+    <h2>Education</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <strong>Bachelor of Technology in Computer Science</strong>
+        <p>Shivaji University (2022 - )</p>
+      </div>
+      <div class="timeline-item">
+        <strong>Higher Secondary</strong>
+        <p>SGIMA  (2020 - 2022)</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications" class="certifications">
+    <h2>Certifications</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <strong>Full Stack Web Development</strong>
+        <p>Coursera</p>
+      </div>
+      <div class="timeline-item">
+        <strong>JavaScript Algorithms and Data Structures</strong>
+        <p>freeCodeCamp</p>
+      </div>
+      <div class="timeline-item">
+        <strong>Responsive Web Design</strong>
+        <p>Udemy</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:patil.shreyansh.18@gmail.com">patil.shreyansh.18@gmail.com</a></p>
+    <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" target="_blank">yourprofile</a></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Shreyansh Patil. <a href="#home">Back to Top</a></p>
+  </footer>
+
+  <script>
+    // Fade-in animation for sections on scroll
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+
+</html>
